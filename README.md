@@ -1,0 +1,2 @@
+# BlackMagic
+Black magic square
