@@ -1,0 +1,5 @@
+<resources>
+    <style name="AppTheme" parent="Base.V7.Theme.AppCompat.Light">
+        <item name="android:windowBackground">@android:color/black</item>
+    </style>
+</resources>
