@@ -31,7 +31,20 @@ public class BlackMatrixAdapter extends RecyclerView.Adapter<BlackMatrixAdapter.
 
 	@Override
 	public int getItemCount() {
-		return mData.length;
+		return mData == null ? 0 : mData.length;
+	}
+
+	public void setData(char[] data) {
+		mData = data;
+		notifyDataSetChanged();
+	}
+
+	public String getResultValue() {
+		if (mData == null) {
+			return null;
+		}
+
+		return String.valueOf(mData[9]);
 	}
 
 	public class BlackViewHolder extends RecyclerView.ViewHolder {
@@ -44,6 +57,10 @@ public class BlackMatrixAdapter extends RecyclerView.Adapter<BlackMatrixAdapter.
 		}
 
 		public void set(int position) {
+			if (mData == null) {
+				return;
+			}
+
 			mBlackValue.setText(position + "\n" + mData[position]);
 		}
 	}

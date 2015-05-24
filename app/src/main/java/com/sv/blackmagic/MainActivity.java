@@ -7,18 +7,19 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.Random;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements View.OnClickListener {
 
 	private static final String TAG = "com.sv.blackmagic";
 	private static final String LOG_TAG = "MainActivity";
 	private static final String UNICODE_PREFIX = "U+26";
 	private static final int CAPACITY = 16;
 
-	private RecyclerView mMatrix;
+	private BlackMatrixAdapter mAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,17 +28,30 @@ public class MainActivity extends Activity {
 
 		GridLayoutManager layoutManager = new GridLayoutManager(this, 10);
 		layoutManager.setReverseLayout(true);
-		mMatrix = (RecyclerView) findViewById(R.id.matrix);
-		mMatrix.addItemDecoration(
+		RecyclerView matrix = (RecyclerView) findViewById(R.id.matrix);
+		matrix.addItemDecoration(
 				new SpacesItemDecoration(
 						getResources().getDimensionPixelSize(R.dimen.black_item_margin)
 				)
 		);
-		mMatrix.setLayoutManager(layoutManager);
-		mMatrix.setHasFixedSize(true);
+		matrix.setLayoutManager(layoutManager);
+		matrix.setHasFixedSize(true);
 
-		BlackMatrixAdapter adapter = new BlackMatrixAdapter(this, _generateMatrix());
-		mMatrix.setAdapter(adapter);
+		mAdapter = new BlackMatrixAdapter(this, _generateMatrix());
+		matrix.setAdapter(mAdapter);
+		findViewById(R.id.magic_circle).setOnClickListener(this);
+	}
+
+	@Override
+	public void onClick(View v) {
+		TextView text = (TextView) v;
+
+		if (text.getText().equals("?")) {
+			text.setText(mAdapter.getResultValue());
+		} else {
+			text.setText("?");
+			mAdapter.setData(_generateMatrix());
+		}
 	}
 
 	private char[] _generateMatrix() {
