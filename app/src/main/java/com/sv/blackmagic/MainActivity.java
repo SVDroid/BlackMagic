@@ -1,16 +1,17 @@
 package com.sv.blackmagic;
 
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
 import java.util.Random;
-
 
 public class MainActivity extends Activity implements View.OnClickListener {
 
@@ -26,7 +27,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		GridLayoutManager layoutManager = new GridLayoutManager(this, 10);
+		boolean isPortrait =
+				getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
+		GridLayoutManager layoutManager = new GridLayoutManager(this, isPortrait ? 10 : 20);
 		layoutManager.setReverseLayout(true);
 		RecyclerView matrix = (RecyclerView) findViewById(R.id.matrix);
 		matrix.addItemDecoration(
@@ -36,6 +39,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		);
 		matrix.setLayoutManager(layoutManager);
 		matrix.setHasFixedSize(true);
+		matrix.setOnTouchListener(new View.OnTouchListener() {
+
+			public boolean onTouch(View v, MotionEvent event) {
+				return event.getAction() == MotionEvent.ACTION_MOVE;
+			}
+		});
 
 		mAdapter = new BlackMatrixAdapter(this, _generateMatrix());
 		matrix.setAdapter(mAdapter);

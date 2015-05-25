@@ -10,19 +10,19 @@
 			  tools:context=".MainActivity">
 	<TextView
 		android:id="@+id/magic_circle"
-		android:layout_width="80dp"
-		android:layout_height="80dp"
+		android:layout_width="148dp"
+		android:layout_height="148dp"
 		android:layout_gravity="center_horizontal"
+		android:background="@drawable/circle_desk"
 		android:gravity="center"
 		android:maxEms="1"
 		android:maxLength="1"
 		android:text="\?"
-		android:textSize="48sp"
+		android:textSize="32sp"
 		android:textStyle="bold"
 		android:textColor="@android:color/white"/>
 	<android.support.v7.widget.RecyclerView
 		android:id="@+id/matrix"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:overScrollMode="never"/>
+		android:layout_height="match_parent"/>
 </LinearLayout>
